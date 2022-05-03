@@ -1,30 +1,33 @@
 package com.example.mycompiler.util;
 
-
-import org.python.util.PythonInterpreter;
-
 import java.io.*;
 
 public class DockerBuild {
 
-    public String execute(String sourceCode) throws IOException, InterruptedException {
+    public String execute(String sourceCode, String inputValue) throws IOException, InterruptedException {
+        if (inputValue.length() > 0) {
+            input(inputValue);
+        }
+        System.out.println("inputValue = " + inputValue);
         exportPythonFile(sourceCode);
         ProcessBuilder builder = new ProcessBuilder("docker", "build", "-t", "demo01", "/Users/emma/PycharmProjects/pythonProject4");
         Process result = builder.start();
 
         int exitCode = result.waitFor();
-        if (exitCode != 0) {
-            System.exit(-1);
-        }
-        else{
+        if (exitCode == 0) {
             builder = new ProcessBuilder("docker", "run", "demo01");
             result = builder.start();
         }
 
         BufferedReader stdInput = new BufferedReader(new InputStreamReader(result.getInputStream()));
-
-        return readOutput(stdInput);
-
+        String answer = readOutput(stdInput);
+        if (answer.length() > 0) {
+            return answer;
+        }
+        else {
+            BufferedReader errInput = new BufferedReader(new InputStreamReader(result.getErrorStream()));
+            throw new IllegalArgumentException(readOutput(errInput));
+        }
     }
 
     public static String readOutput(BufferedReader reader) throws IOException {
@@ -51,5 +54,15 @@ public class DockerBuild {
         }
     }
 
+    public void input(String inputValue){
+        File file = new File("/Users/emma/PycharmProjects/pythonProject4/input.txt");
 
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+            writer.write(inputValue);
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

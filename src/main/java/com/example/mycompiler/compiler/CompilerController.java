@@ -1,23 +1,33 @@
 package com.example.mycompiler.compiler;
 
 import com.example.mycompiler.input.Input;
+import com.example.mycompiler.output.Output;
 import com.example.mycompiler.util.DockerBuild;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/compile")
 public class CompilerController {
 
     @PostMapping
-    ResponseEntity<String> compile(@RequestBody Input input) {
+    ResponseEntity<Output> compile(@RequestBody Input input) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formatedNow = sdf.format(new Date());
+
         try{
             DockerBuild dockerBuild = new DockerBuild();
-            String results = dockerBuild.execute(input.getSourceCode());
-            return new ResponseEntity(results, HttpStatus.ACCEPTED);
+            String results = dockerBuild.execute(input.getSourceCode(), input.getInputValue());
+            Output output = new Output("200", results, formatedNow);
+            return new ResponseEntity<>(output, HttpStatus.OK);
+
         }catch (Exception e) {
-            return new ResponseEntity("컴파일할 수 없습니다.", HttpStatus.BAD_REQUEST);
+            Output output = new Output("400", e.getMessage(), formatedNow);
+            return new ResponseEntity<>(output, HttpStatus.BAD_REQUEST);
         }
     }
 }
