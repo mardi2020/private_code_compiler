@@ -16,7 +16,6 @@ public class CompilerController {
 
     @PostMapping
     ResponseEntity<Output> compile(@RequestBody Input input) {
-        System.out.println("input = " + input.getSourceCode());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String formatedNow = sdf.format(new Date());
 

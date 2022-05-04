@@ -5,9 +5,8 @@ import java.io.*;
 public class DockerBuild {
 
     public String execute(String sourceCode, String inputValue) throws IOException, InterruptedException {
-        if (inputValue.length() > 0) {
-            input(inputValue);
-        }
+
+        input(inputValue);
 
         exportPythonFile(sourceCode);
         ProcessBuilder builder = new ProcessBuilder("docker", "build", "-t", "demo01", "/Users/emma/PycharmProjects/pythonProject4");
@@ -26,7 +25,8 @@ public class DockerBuild {
         }
         else {
             BufferedReader errInput = new BufferedReader(new InputStreamReader(result.getErrorStream()));
-            throw new IllegalArgumentException(readOutput(errInput));
+//            throw new IllegalArgumentException(readOutput(errInput));
+            return readOutput(errInput);
         }
     }
 
