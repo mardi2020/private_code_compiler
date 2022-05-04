@@ -13,7 +13,7 @@ public class Input {
 
     private String sourceCode;
 
-    private String inputValue;
+    private String inputValue = "";
 
     private String expectedOutput;
 

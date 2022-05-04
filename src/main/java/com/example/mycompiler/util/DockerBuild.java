@@ -8,7 +8,7 @@ public class DockerBuild {
         if (inputValue.length() > 0) {
             input(inputValue);
         }
-        System.out.println("inputValue = " + inputValue);
+
         exportPythonFile(sourceCode);
         ProcessBuilder builder = new ProcessBuilder("docker", "build", "-t", "demo01", "/Users/emma/PycharmProjects/pythonProject4");
         Process result = builder.start();
