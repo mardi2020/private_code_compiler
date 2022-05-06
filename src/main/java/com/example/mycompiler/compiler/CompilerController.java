@@ -21,7 +21,7 @@ public class CompilerController {
 
         try{
             DockerBuild dockerBuild = new DockerBuild();
-            String results = dockerBuild.execute(input.getSourceCode(), input.getInputValue());
+            String results = dockerBuild.execute(input.getSourceCode(), input.getInputValue(), input.getLanguage());
             Output output = new Output("200", results, formatedNow);
             return new ResponseEntity<>(output, HttpStatus.OK);
 

@@ -4,12 +4,12 @@ import java.io.*;
 
 public class DockerBuild {
 
-    public String execute(String sourceCode, String inputValue) throws IOException, InterruptedException {
+    public String execute(String sourceCode, String inputValue, String language) throws IOException, InterruptedException {
 
-        input(inputValue);
+        input(inputValue, language);
+        exportFile(sourceCode, language);
 
-        exportPythonFile(sourceCode);
-        ProcessBuilder builder = new ProcessBuilder("docker", "build", "-t", "demo01", "/Users/emma/PycharmProjects/pythonProject4");
+        ProcessBuilder builder = new ProcessBuilder("docker", "build", "-t", "demo01", "/Users/emma/PycharmProjects/pythonProject4/" + language);
         Process result = builder.start();
 
         int exitCode = result.waitFor();
@@ -42,20 +42,27 @@ public class DockerBuild {
         return builder.toString();
     }
 
-    public void exportPythonFile(String sourceCode) {
-        File file = new File("/Users/emma/PycharmProjects/pythonProject4/main.py");
+    public void exportFile(String sourceCode, String language) {
+        String extension = "";
+        if(language.equals("python"))
+            extension = ".py";
+        else if(language.equals("cpp"))
+            extension = ".cpp";
+
+        File file = new File("/Users/emma/PycharmProjects/pythonProject4/"+language+"/main"+extension);
 
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             writer.write(sourceCode);
             writer.close();
+
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    public void input(String inputValue){
-        File file = new File("/Users/emma/PycharmProjects/pythonProject4/input.txt");
+    public void input(String inputValue, String language){
+        File file = new File("/Users/emma/PycharmProjects/pythonProject4/"+language+"/input.txt");
 
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));

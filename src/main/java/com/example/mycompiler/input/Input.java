@@ -11,6 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Input {
 
+    private String language;
+
     private String sourceCode;
 
     private String inputValue;
