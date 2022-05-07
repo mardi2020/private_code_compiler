@@ -14,7 +14,7 @@ public class DockerBuild {
 
         int exitCode = result.waitFor();
         if (exitCode == 0) {
-            builder = new ProcessBuilder("docker", "run", "demo01");
+            builder = new ProcessBuilder("docker", "run", "--rm", "demo01");
             result = builder.start();
         }
 
@@ -48,6 +48,8 @@ public class DockerBuild {
             extension = ".py";
         else if(language.equals("cpp"))
             extension = ".cpp";
+        else if(language.equals("java"))
+            extension = ".java";
 
         File file = new File("/Users/emma/PycharmProjects/pythonProject4/"+language+"/main"+extension);
 
