@@ -9,7 +9,7 @@ public class DockerBuild {
         input(inputValue, language);
         exportFile(sourceCode, language);
 
-        ProcessBuilder builder = new ProcessBuilder("docker", "build", "-t", "demo01", "/Users/emma/PycharmProjects/pythonProject4/" + language);
+        ProcessBuilder builder = new ProcessBuilder("docker", "build", "-t", "demo01", "/Users/emma/Downloads/MyCompiler/src/main/resources/languages/" + language);
         Process result = builder.start();
 
         int exitCode = result.waitFor();
@@ -51,7 +51,7 @@ public class DockerBuild {
         else if(language.equals("java"))
             extension = ".java";
 
-        File file = new File("/Users/emma/PycharmProjects/pythonProject4/"+language+"/main"+extension);
+        File file = new File("/Users/emma/Downloads/MyCompiler/src/main/resources/languages/"+language+"/main"+extension);
 
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));

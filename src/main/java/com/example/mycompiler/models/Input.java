@@ -1,4 +1,4 @@
-package com.example.mycompiler.input;
+package com.example.mycompiler.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

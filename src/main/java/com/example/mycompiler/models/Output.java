@@ -1,4 +1,4 @@
-package com.example.mycompiler.output;
+package com.example.mycompiler.models;
 
 
 import lombok.*;

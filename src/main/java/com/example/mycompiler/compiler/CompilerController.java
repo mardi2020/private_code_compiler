@@ -1,7 +1,7 @@
 package com.example.mycompiler.compiler;
 
-import com.example.mycompiler.input.Input;
-import com.example.mycompiler.output.Output;
+import com.example.mycompiler.models.Input;
+import com.example.mycompiler.models.Output;
 import com.example.mycompiler.util.DockerBuild;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
