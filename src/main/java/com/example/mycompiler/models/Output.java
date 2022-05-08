@@ -3,6 +3,10 @@ package com.example.mycompiler.models;
 
 import lombok.*;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
+
 @Getter
 @Setter
 public class Output {
@@ -21,5 +25,12 @@ public class Output {
         statusCode = s;
         outputValue = results;
         timeSubmitted = formatedNow;
+    }
+
+    public Output(){}
+
+    public void mapper(String usage) {
+        String[] newStr = usage.split("\\s+");
+        this.runtime = newStr[2];
     }
 }

@@ -1,10 +1,13 @@
 package com.example.mycompiler.util;
 
+import com.example.mycompiler.models.Output;
+
 import java.io.*;
 
 public class DockerBuild {
 
-    public String execute(String sourceCode, String inputValue, String language) throws IOException, InterruptedException {
+    public Output execute(String sourceCode, String inputValue, String language) throws IOException, InterruptedException {
+        Output output = new Output();
 
         input(inputValue, language);
         exportFile(sourceCode, language);
@@ -21,12 +24,17 @@ public class DockerBuild {
         BufferedReader stdInput = new BufferedReader(new InputStreamReader(result.getInputStream()));
         String answer = readOutput(stdInput);
         if (answer.length() > 0) {
-            return answer;
+            BufferedReader errInput = new BufferedReader(new InputStreamReader(result.getErrorStream()));
+            output.setOutputValue(answer);
+            String error = readOutput(errInput);
+            output.mapper(error);
+            return output;
         }
         else {
             BufferedReader errInput = new BufferedReader(new InputStreamReader(result.getErrorStream()));
 //            throw new IllegalArgumentException(readOutput(errInput));
-            return readOutput(errInput);
+            output.setOutputValue(readOutput(errInput));
+            return output;
         }
     }
 
@@ -64,7 +72,7 @@ public class DockerBuild {
     }
 
     public void input(String inputValue, String language){
-        File file = new File("/Users/emma/PycharmProjects/pythonProject4/"+language+"/input.txt");
+        File file = new File("/Users/emma/Downloads/MyCompiler/src/main/resources/languages/"+language+"/input.txt");
 
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));

@@ -21,9 +21,11 @@ public class CompilerController {
 
         try{
             DockerBuild dockerBuild = new DockerBuild();
-            String results = dockerBuild.execute(input.getSourceCode(), input.getInputValue(), input.getLanguage());
-            Output output = new Output("200", results, formatedNow);
-            return new ResponseEntity<>(output, HttpStatus.OK);
+            Output results = dockerBuild.execute(input.getSourceCode(), input.getInputValue(), input.getLanguage());
+//            Output output = new Output("200", results, formatedNow);
+            results.setTimeSubmitted(formatedNow);
+            results.setStatusCode("200");
+            return new ResponseEntity<>(results, HttpStatus.OK);
 
         }catch (Exception e) {
             Output output = new Output("400", e.getMessage(), formatedNow);
