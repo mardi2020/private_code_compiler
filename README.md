@@ -1,5 +1,5 @@
 ## Online IDE 프로젝트
-### 시연 영상 [➡️ youtube](https://youtube.com/shorts/mnoaTCD4Tug?feature=share)
+### 시연 영상 [➡️ youtube](https://www.youtube.com/shorts/M1nt7kYeznM)
 ------
 - language: Java, JavaScript<br>
 - Back-end: Spring boot<br>
